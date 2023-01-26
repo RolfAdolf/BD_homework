@@ -81,7 +81,7 @@ CREATE TABLE tag_data.tags
 CREATE TABLE tag_data.reports 
 	(
 	report_id SERIAL NOT NULL,
-	tag_id SMALLSERIAL NOT NULL,
+	tag_id SMALLINT NOT NULL,
 	tag_timestamptz TIMESTAMPTZ NOT NULL,
 	tag_value REAL NOT NULL,
 	CONSTRAINT report_id_pkey PRIMARY KEY(report_id),
