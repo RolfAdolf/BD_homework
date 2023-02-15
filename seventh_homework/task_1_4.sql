@@ -11,6 +11,7 @@ SELECT * FROM bookings.tickets AS t WHERE t.contact_data = '{"phone": "+70001171
 
 -- B-Tree. Время 22 - ms. Память - 226 mB.
 CREATE INDEX idx_4_b_tree ON bookings.tickets (contact_data);
+EXPLAIN
 SELECT * FROM bookings.tickets AS t WHERE t.contact_data = '{"phone": "+70001171617"}';
 SELECT pg_size_pretty(pg_total_relation_size('bookings.idx_4_b_tree'));
 DROP INDEX bookings.idx_4_b_tree;
@@ -32,9 +33,11 @@ DROP INDEX bookings.idx_4_gist;
 
 -- GIN. Время - 21 s. Память - 204 mB.
 CREATE INDEX idx_4_gin ON bookings.tickets USING GIN (((contact_data->>'phone')::TEXT));
+EXPLAIN
 SELECT * FROM bookings.tickets AS t WHERE t.contact_data->>'phone' = '+70001171617';
 SELECT pg_size_pretty(pg_total_relation_size('bookings.idx_4_gin'));
 DROP INDEX bookings.idx_4_gin;
+
 
 
 -- BRIN. Время - 926 ms. Память - 64 kB.
@@ -47,8 +50,9 @@ DROP INDEX bookings.idx_4_brin;
 /*********** Результаты *************/
 
 --B-Tree....22....21mB
---HASH......21....114mB 
+--HASH......21....114mB - Лучший по скорости
 --GIST......22....178mB
---GIN.......21....17mB - Лучший по скорости
---BRIN......926...64kB - Лучший по памяти
+--GIN.......21....17mB
+--BRIN......826...64kB - Лучший по памяти
+
 

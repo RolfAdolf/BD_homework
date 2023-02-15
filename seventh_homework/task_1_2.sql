@@ -52,3 +52,4 @@ DROP INDEX bookings.idx_2_brin;
 --GIN.......22....204mB
 --BRIN......32....56kB - Лучший по памяти
 
+
